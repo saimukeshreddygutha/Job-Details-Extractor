@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Job Details Extractor — Dashboard</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand"><span class="dot"></span> Job Details Extractor</div>
+      <nav class="tabs">
+        <button class="tab active" data-tab="jobs">Jobs</button>
+        <button class="tab" data-tab="settings">Settings</button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ============================ JOBS ============================ -->
+      <section id="tab-jobs" class="panel active">
+        <div class="toolbar">
+          <div class="counts"><strong id="job-count">0</strong> jobs tracked</div>
+          <div class="actions">
+            <button id="push-all" class="btn primary">Push all to DB</button>
+            <button id="clear-all" class="btn ghost danger">Clear all</button>
+          </div>
+        </div>
+
+        <div id="push-status" class="push-status" hidden></div>
+
+        <div id="empty" class="empty" hidden>
+          No jobs tracked yet. Open a job on
+          <code>jobright.ai/jobs/info/…</code> and click the green button.
+        </div>
+
+        <div class="table-wrap">
+          <table id="jobs-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Company</th>
+                <th>Type</th>
+                <th>Location</th>
+                <th>Posted</th>
+                <th>Saved</th>
+                <th>Apply</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="jobs-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================== SETTINGS ========================== -->
+      <section id="tab-settings" class="panel">
+        <form id="settings-form" class="form">
+          <p class="form-intro">
+            <strong>Push all to DB</strong> sends your tracked jobs to this endpoint,
+            which inserts them into your Postgres database. The database credentials
+            live on the server (your droplet) — never in the browser.
+          </p>
+
+          <label>API endpoint URL
+            <input type="url" id="endpoint_url" placeholder="https://ingest.myresumebuilder.fyi/jobs" />
+          </label>
+
+          <label>Ingest secret <span class="optional">(optional — sent as the x-secret header)</span>
+            <input type="password" id="secret" autocomplete="new-password" placeholder="leave blank for no auth" />
+          </label>
+
+          <label>User ID <span class="optional">(optional — integer from the users table)</span>
+            <input type="number" id="user_id" min="1" step="1" placeholder="e.g. 1" />
+          </label>
+          <p class="form-intro" style="margin-top:-8px; font-size:12px;">
+            If set, pushed jobs will be marked <strong>Awaiting</strong> for this user in <code>user_jobs</code>.
+            Leave blank to only insert into the global <code>jobs</code> table.
+          </p>
+
+          <div class="form-actions">
+            <button type="submit" class="btn primary">Save settings</button>
+            <span id="settings-saved" class="saved-msg" hidden>Saved ✓</span>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script src="options.js"></script>
+  </body>
+</html>

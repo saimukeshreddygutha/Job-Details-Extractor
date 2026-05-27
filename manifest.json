@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "Job Details Extractor",
+  "version": "2.1.0",
+  "description": "Track Jobright and LinkedIn jobs to a local list with one click, then review and bulk-push them to your Postgres database.",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://jobright.ai/jobs/info/*",
+        "https://www.linkedin.com/jobs/*"
+      ],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Job Details Extractor",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
